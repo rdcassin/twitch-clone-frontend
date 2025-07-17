@@ -1,5 +1,5 @@
 {
-  "name": "twitch-clone-front-end",
+  "name": "twitch-clone-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,12 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "docker:build": "docker build -t twitch-clone-frontend .",
+    "docker:run": "docker run --rm -p 3000:3000 twitch-clone-frontend",
+    "docker:dev": "docker run --rm -p 3000:3000 -v $(pwd):/app -v /app/node_modules twitch-clone-frontend npm run dev",
+    "docker:clean": "docker system prune -f",
+    "ci:local": "npm run lint && npm run format:check && npm run build"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.25.4",
