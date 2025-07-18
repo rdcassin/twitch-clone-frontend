@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "docker:build": "docker build --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$(grep NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY .env | cut -d '=' -f2) -t twitch-clone-frontend .",
+    "docker:build:ci": "docker build --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY} -t twitch-clone-frontend .",
     "docker:run": "docker run --rm -p 3000:3000 twitch-clone-frontend",
     "docker:dev": "docker run --rm -p 3000:3000 -v $(pwd):/app -v /app/node_modules twitch-clone-frontend npm run dev",
     "docker:clean": "docker system prune -f",

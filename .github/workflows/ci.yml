@@ -41,7 +41,7 @@ jobs:
       - name: 🐳 Build Docker image
         env:
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-        run: npm run docker:build
+        run: npm run docker:build:ci
 
       - name: ✅ Verify Docker image runs
         run: docker run --rm -d --name test-app twitch-clone-frontend && sleep 3 && docker logs test-app && docker stop test-app
