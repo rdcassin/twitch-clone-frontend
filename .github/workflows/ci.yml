@@ -25,6 +25,8 @@ jobs:
         run: npm ci
 
       - name: 🔍 Run code quality checks
+        env:
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
         run: npm run ci:local
 
   build-and-test:
