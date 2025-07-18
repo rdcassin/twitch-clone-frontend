@@ -1,0 +1,10 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stylized 'Q' shape as the base, representing a journey or quest, filled entirely in white -->
+  <path d="M 50 10 A 40 40 0 1 0 50 90 A 40 40 0 0 0 50 10 Z M 50 20 A 30 30 0 1 1 50 80 A 30 30 0 0 1 50 20 Z" fill="white"/>
+  
+  <!-- The tail of the 'Q' or a path continuation, also filled white -->
+  <path d="M 50 70 L 65 85 L 75 75 Z" fill="white"/>
+
+  <!-- A play button icon, symbolizing streaming, centered within the 'Q' and filled white -->
+  <polygon points="40 40, 70 50, 40 60" fill="white"/>
+</svg>
