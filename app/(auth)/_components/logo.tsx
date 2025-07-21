@@ -13,7 +13,7 @@ export const Logo = () => {
     <div className="flex flex-col items-center gap-y-4">
       <div className="bg-white rounded-full p-1">
         <Image
-          src="/logo.svg"
+          src="/qplay.svg"
           alt="Quest"
           height="80"
           width="80"
