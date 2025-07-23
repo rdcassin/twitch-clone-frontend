@@ -12,5 +12,5 @@ export const Toggle = () => {
     setMobileOpen,
   } = useSidebar();
 
-  return <div>Toggle!</div>;
+  return <div>Toggle</div>;
 };
