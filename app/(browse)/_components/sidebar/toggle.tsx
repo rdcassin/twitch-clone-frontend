@@ -28,7 +28,7 @@ export const Toggle = () => {
       )}
       {!isCollapsed && (
         <div className="p-3 pl-6 mb-2 flex items-center w-full">
-          <p className="font-semibold text-primary">Your Quest</p>
+          <p className="font-semibold text-primary">⚔️ Your Quest</p>
           <Hint label={label} side="right" asChild>
             <Button
               className="h-auto p-2 ml-auto"

@@ -1,14 +1,50 @@
 import { prisma } from "@/lib/prisma";
-import { getSelf } from "./auth-service";
+import { getSelf } from "@/lib/services/auth-service";
 
 export const getRecommended = async () => {
   // await new Promise((resolve) => setTimeout(resolve, 5000));
+  let userId;
 
-  const users = await prisma.user.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  try {
+    const self = await getSelf();
+    userId = self.id;
+  } catch {
+    userId = null;
+  }
+
+  let users = [];
+
+  if (userId) {
+    users = await prisma.user.findMany({
+      where: {
+        AND: [
+          {
+            NOT: {
+              id: userId,
+            },
+          },
+          {
+            NOT: {
+              userFollowers: {
+                some: {
+                  followerId: userId,
+                },
+              },
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  } else {
+    users = await prisma.user.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
 
   return users;
 };
