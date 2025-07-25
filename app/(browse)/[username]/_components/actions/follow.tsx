@@ -1,6 +1,6 @@
 "use client";
 
-import { onFollow, onUnfollow } from "@/actions/follow";
+import { joinParty, leaveParty } from "@/actions/follow";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -29,9 +29,9 @@ export const Follow = ({ isFollowing, userId }: FollowProps) => {
   const onClick = async () => {
     startTransition(() => {
       if (isFollowing) {
-        onUnfollow(userId).then(handleResult);
+        leaveParty(userId).then(handleResult);
       } else {
-        onFollow(userId).then(handleResult);
+        joinParty(userId).then(handleResult);
       }
     });
   };
