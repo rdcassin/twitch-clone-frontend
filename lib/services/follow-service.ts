@@ -40,7 +40,7 @@ export const isFollowingUser = async (id: string) => {
     });
 
     if (!otherUser) {
-      throw new Error("Adventurer not found");
+      throw new Error("⚔️ Adventurer not found");
     }
 
     const existingFollow = await prisma.follow.findUnique({
@@ -158,7 +158,7 @@ export const unfollowUser = async (id: string) => {
   } catch {
     return {
       success: false,
-      message: "⚠️ Something went wrong while leaving this party",
+      message: "⚠️ Something went wrong while leaving the party",
     };
   }
 };

@@ -10,7 +10,7 @@ export const isBlockedByUser = async (id: string) => {
     });
 
     if (!otherUser) {
-      throw new Error("Adventurer not found");
+      throw new Error("⚔️ Adventurer not found");
     }
 
     if (otherUser.id === self.id) {
@@ -41,7 +41,7 @@ export const isBlockingUser = async (id: string) => {
     });
 
     if (!otherUser) {
-      throw new Error("Adventurer not found");
+      throw new Error("⚔️ Adventurer not found");
     }
 
     if (otherUser.id === self.id) {
@@ -153,7 +153,7 @@ export const unblockUser = async (id: string) => {
     if (!existingBlock) {
       return {
         success: false,
-        message: "✋ Peace already restored with Adventurer!",
+        message: "✋ Peace already restored with adventurer!",
       };
     }
 
@@ -170,7 +170,7 @@ export const unblockUser = async (id: string) => {
     return {
       success: true,
       data: unblock,
-      message: "🕊️ Peace restored with Adventurer!",
+      message: "🕊️ Peace restored with adventurer!",
     };
   } catch {
     return {

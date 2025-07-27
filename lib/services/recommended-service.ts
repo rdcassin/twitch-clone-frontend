@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { getSelf } from "@/lib/services/auth-service";
 
 export const getRecommended = async () => {
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
   let userId;
 
   try {
@@ -46,9 +45,9 @@ export const getRecommended = async () => {
               userBlocked: {
                 some: {
                   blockerId: userId,
-                }
-              }
-            }
+                },
+              },
+            },
           },
         ],
       },
