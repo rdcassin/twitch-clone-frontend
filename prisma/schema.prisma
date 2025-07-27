@@ -28,6 +28,7 @@ model User {
 
   userBlocking Block[] @relation("UserBlocking")
   userBlocked  Block[] @relation("UserBlocked")
+  stream       Stream?
 }
 
 model Follow {
@@ -60,4 +61,44 @@ model Block {
   @@index([blockerId]) // Fast "who do I block" queries
   @@index([blockedId]) // Fast "who blocks me" queries
   @@map("blocks")
+}
+
+model Stream {
+  id           String  @id @default(uuid())
+  name         String
+  description  String? @db.Text
+  thumbnailUrl String? @db.Text
+  ingressId    String? @unique
+  serverUrl    String? @db.Text
+  streamKey    String? @db.Text
+
+  isLive              Boolean @default(false)
+  isChatEnabled       Boolean @default(true)
+  isChatDelayed       Boolean @default(false)
+  isChatFollowersOnly Boolean @default(false)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId]) // Fast category filtering
+  @@index([isLive]) // Fast live stream queries
+  @@index([createdAt]) // Fast "newest streams" queries
+  @@map("streams")
+}
+
+model Category {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  streams Stream[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
 }

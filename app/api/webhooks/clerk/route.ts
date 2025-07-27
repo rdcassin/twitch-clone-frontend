@@ -90,6 +90,11 @@ export async function POST(req: NextRequest) {
           email: email_addresses[0]?.email_address || "",
           username: finalUsername,
           imageUrl: image_url || "",
+          stream: {
+            create: {
+              name: `${finalUsername}'s Quest`,
+            },
+          },
         },
       });
 
