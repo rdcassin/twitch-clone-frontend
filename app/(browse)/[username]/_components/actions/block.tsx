@@ -37,11 +37,7 @@ export const Block = ({ isBlocking, userId }: BlockProps) => {
   };
 
   return (
-    <Button 
-      variant="banish" 
-      onClick={onClick} 
-      disabled={isPending}
-    >
+    <Button variant="banish" onClick={onClick} disabled={isPending}>
       {isBlocking ? "🕊️ Restore Adventurer" : "🛡️ Banish Adventurer"}
     </Button>
   );

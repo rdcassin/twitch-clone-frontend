@@ -37,6 +37,6 @@ export const getSelfByUsername = async (username: string) => {
   if (self.username !== user.username) {
     throw new Error("🚫 Cannot access another adventurer's quest command");
   }
-  
+
   return user;
 };

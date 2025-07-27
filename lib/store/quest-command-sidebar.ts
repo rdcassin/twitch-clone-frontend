@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface QuestCommandSidebarStore {
   isCollapsed: boolean;
@@ -8,10 +8,12 @@ interface QuestCommandSidebarStore {
   setCollapsed: (collapsed: boolean) => void;
 }
 
-export const useQuestCommandSidebar = create<QuestCommandSidebarStore>((set) => ({
-  isCollapsed: false,
-  activeSection: "home",
-  toggleCollapse: () => set((state) => ({ isCollapsed: !state.isCollapsed })),
-  setActiveSection: (section) => set({ activeSection: section }),
-  setCollapsed: (collapsed) => set({ isCollapsed: collapsed }),
-}));
+export const useQuestCommandSidebar = create<QuestCommandSidebarStore>(
+  (set) => ({
+    isCollapsed: false,
+    activeSection: "home",
+    toggleCollapse: () => set((state) => ({ isCollapsed: !state.isCollapsed })),
+    setActiveSection: (section) => set({ activeSection: section }),
+    setCollapsed: (collapsed) => set({ isCollapsed: collapsed }),
+  }),
+);
