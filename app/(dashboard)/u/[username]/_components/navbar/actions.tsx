@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 
 export const Actions = () => {
@@ -13,8 +12,8 @@ export const Actions = () => {
         asChild
       >
         <Link href="/">
-          <LogOut className="h-5 w-5 mr-2" />
-          🏠 Return to Quest
+          <span className="h-4 w-4 flex items-center mr-2">🏠</span>
+          <span className="hidden lg:block">Return to Quest</span>
         </Link>
       </Button>
       <UserButton />

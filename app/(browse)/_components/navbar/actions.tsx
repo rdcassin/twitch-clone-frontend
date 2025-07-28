@@ -25,7 +25,7 @@ export const Actions = async () => {
             asChild
           >
             <Link href={`/u/${user.username}`}>
-              <Clapperboard className="h-5 w-5 lg:mr-2" />
+              <span className="h-4 w-4 flex items-center mr-2">🎬</span>
               <span className="hidden lg:block">Dashboard</span>
             </Link>
           </Button>
