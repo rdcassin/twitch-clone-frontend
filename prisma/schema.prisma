@@ -72,10 +72,13 @@ model Stream {
   serverUrl    String? @db.Text
   streamKey    String? @db.Text
 
-  isLive              Boolean @default(false)
-  isChatEnabled       Boolean @default(true)
-  isChatDelayed       Boolean @default(false)
-  isChatFollowersOnly Boolean @default(false)
+  isLive                Boolean @default(false)
+  isChatEnabled         Boolean @default(true)
+  isChatDelayed         Boolean @default(false)
+  isChatFollowersOnly   Boolean @default(false)
+  isChatSlowMode        Boolean @default(false)
+  isChatLinksAllowed    Boolean @default(true)
+  isChatProfanityFilter Boolean @default(true)
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
