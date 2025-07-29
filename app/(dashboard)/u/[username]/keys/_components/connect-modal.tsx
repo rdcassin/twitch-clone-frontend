@@ -18,8 +18,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRef, useState, useTransition } from "react";
+import { createIngress } from "@/actions/ingress";
+import { toast } from "sonner";
+
+const RTMP = "0";
+const WHIP = "1";
+
+type IngressTypeString = typeof RTMP | typeof WHIP;
 
 export const ConnectModal = () => {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const [isPending, startTransition] = useTransition();
+  const [ingressType, setIngressType] = useState<IngressTypeString>(RTMP);
+
+  const onSubmit = () => {
+    startTransition(() => {
+      createIngress(parseInt(ingressType))
+        .then((result) => {
+          if (result.success) {
+            toast.success(result.message);
+            closeRef?.current?.click();
+          } else {
+            toast.error(result.message);
+          }
+        })
+        .catch(() =>
+          toast.error("⚠️ Something went wrong generating quest connection"),
+        );
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,13 +61,21 @@ export const ConnectModal = () => {
             Create new streaming credentials for your adventure
           </p>
         </DialogHeader>
-        <Select>
+        <Select
+          value={ingressType}
+          onValueChange={(value) => {
+            if (value === RTMP || value === WHIP) {
+              setIngressType(value);
+            }
+          }}
+          disabled={isPending}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="🎥 Select Streaming Protocol" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="RTMP">📡 RTMP (Recommended for OBS)</SelectItem>
-            <SelectItem value="WHIP">🌐 WHIP (WebRTC)</SelectItem>
+            <SelectItem value={RTMP}>📡 RTMP (Recommended for OBS)</SelectItem>
+            <SelectItem value={WHIP}>🌐 WHIP (WebRTC)</SelectItem>
           </SelectContent>
         </Select>
         <Alert>
@@ -50,11 +87,13 @@ export const ConnectModal = () => {
           </AlertDescription>
         </Alert>
         <div className="flex justify-between">
-          <DialogClose>
-            <Button variant="ghost">❌ Cancel</Button>
+          <DialogClose ref={closeRef} asChild>
+            <Button variant="ghost" disabled={isPending}>
+              ❌ Cancel
+            </Button>
           </DialogClose>
-          <Button onClick={() => {}} variant="blue">
-            ⚡ Generate New Keys
+          <Button onClick={onSubmit} variant="blue" disabled={isPending}>
+            {isPending ? "⚡ Generating..." : "⚡ Generate New Keys"}
           </Button>
         </div>
       </DialogContent>
