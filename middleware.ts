@@ -4,9 +4,8 @@ const isPublicRoute = createRouteMatcher([
   "/sign-in(.*)",
   "/api/webhooks/(.*)",
   "/",
-  // "search", // Search results page
-  // "/watch/(.*)", // Individual stream viewing
-  // "/u/[username]", // View stream profiles (but not dashboard)
+  "/search",
+  "/u/(.*)", // All /u/ routes are public but secured by the Layout with getSelfByUsername();
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
@@ -17,9 +16,7 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
     "/(api|trpc)(.*)",
   ],
 };

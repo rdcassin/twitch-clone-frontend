@@ -51,15 +51,29 @@ export const getRecommended = async () => {
           },
         ],
       },
-      orderBy: {
-        createdAt: "desc",
+      include: {
+        stream: {
+          select: {
+            isLive: true,
+            name: true,
+            thumbnailUrl: true,
+          },
+        },
       },
+      orderBy: [{ stream: { isLive: "desc" } }, { createdAt: "desc" }],
     });
   } else {
     users = await prisma.user.findMany({
-      orderBy: {
-        createdAt: "desc",
+      include: {
+        stream: {
+          select: {
+            isLive: true,
+            name: true,
+            thumbnailUrl: true,
+          },
+        },
       },
+      orderBy: [{ stream: { isLive: "desc" } }, { createdAt: "desc" }],
     });
   }
 
