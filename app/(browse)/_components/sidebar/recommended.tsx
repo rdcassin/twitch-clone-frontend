@@ -15,6 +15,15 @@ export const Recommended = ({ data }: RecommendedProps) => {
 
   const showLabel = !isCollapsed && data.length > 0;
 
+  if (!data.length) {
+    return (
+      <div className="text-center text-muted-foreground p-4 italic">
+        🗺️ All known realms explored.
+        <br />⏳ Check back soon for new adventures!
+      </div>
+    );
+  }
+
   return (
     <div>
       {showLabel && (
@@ -38,10 +47,15 @@ export const Recommended = ({ data }: RecommendedProps) => {
 
 export const RecommendedSkeleton = () => {
   return (
-    <ul className="px-2">
-      {[...Array(3)].map((_, i) => (
-        <UserItemSkeleton key={i} />
-      ))}
-    </ul>
+    <>
+      <div className="text-xs text-center text-muted-foreground mb-2">
+        🌌 Scanning the skies for new adventures...
+      </div>
+      <ul className="px-2">
+        {[...Array(3)].map((_, i) => (
+          <UserItemSkeleton key={i} />
+        ))}
+      </ul>
+    </>
   );
 };

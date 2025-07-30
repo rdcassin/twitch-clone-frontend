@@ -23,12 +23,14 @@ interface ToggleCardProps {
   field: FieldTypes;
   label: string;
   value: boolean;
+  description?: string;
 }
 
 export const ToggleCard = ({
   field,
   label,
   value = false,
+  description,
 }: ToggleCardProps) => {
   const [isPending, startTransition] = useTransition();
 
@@ -50,6 +52,9 @@ export const ToggleCard = ({
     <div className="rounded-xl bg-muted p-6">
       <div className="flex items-center justify-between">
         <p className="font-semibold shrink-0">{label}</p>
+        {description && (
+          <p className="text-xs text-muted-foreground mt-1">{description}</p>
+        )}
         <Switch
           checked={value}
           onCheckedChange={onChange}

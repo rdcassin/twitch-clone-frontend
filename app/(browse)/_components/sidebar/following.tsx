@@ -16,7 +16,13 @@ export const Following = ({ data }: FollowingProps) => {
   const { isCollapsed } = useSidebar();
 
   if (!data.length) {
-    return null;
+    return (
+      <div className="text-center text-muted-foreground p-4 italic">
+        👥 No party members assemble yet.
+        <br />
+        🎯 Seek out new adventurers to start your quest!
+      </div>
+    );
   }
 
   return (
@@ -42,10 +48,17 @@ export const Following = ({ data }: FollowingProps) => {
 
 export const FollowingSkeleton = () => {
   return (
-    <ul className="px-2 pt-2 lg:pt-0">
-      {[...Array(3)].map((_, i) => (
-        <UserItemSkeleton key={i} />
-      ))}
-    </ul>
+    <>
+      <div className="text-xs text-center text-muted-foreground mb-2">
+        🧙‍♂️ Consulting the ancient scrolls...
+        <br />
+        Please wait while party members are summoned!
+      </div>
+      <ul className="px-2 pt-2 lg:pt-0">
+        {[...Array(3)].map((_, i) => (
+          <UserItemSkeleton key={i} />
+        ))}
+      </ul>
+    </>
   );
 };
