@@ -12,6 +12,8 @@ import { useMediaQuery } from "usehooks-ts";
 import { ChatHeader } from "./chat-header";
 import { ChatForm } from "./chat-form";
 import { ChatList } from "./chat-list";
+import { validateChatMessage } from "@/actions/chat-validation";
+import { toast } from "sonner";
 
 interface ChatProps {
   viewerName: string;
@@ -55,20 +57,50 @@ export const Chat = ({
 
   const [value, setValue] = useState("");
   const { chatMessages: messages, send } = useChat();
+  const [isValidating, setIsValidating] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
-  const reversedMessages = useMemo(() => {
+  const sortedMessages = useMemo(() => {
     return messages.sort((a, b) => a.timestamp - b.timestamp);
   }, [messages]);
 
-  const onSubmit = () => {
-    if (!send) return;
+  const onSubmit = async () => {
+    if (!send || isValidating) return;
 
-    send(value);
-    setValue("");
+    setIsValidating(true);
+
+    try {
+      const validation = await validateChatMessage(value, hostIdentity);
+
+      if (!validation.valid) {
+        toast.error(validation.reason);
+        return;
+      }
+
+      const messageToSend = validation.cleanedMessage || value;
+
+      if (validation.cleanedMessage && validation.cleanedMessage !== value) {
+        toast.info("🛡️ Message was filtered for quest safety");
+      }
+
+      send(messageToSend);
+      setValue("");
+      setIsTyping(false);
+    } catch (error) {
+      console.error("Chat validation failed:", error);
+      toast.error("⚠️ Failed to send message. Please try again.");
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   const onChange = (value: string) => {
     setValue(value);
+    if (value.length > 0 && !isTyping) {
+      setIsTyping(true);
+    } else if (value.length === 0 && isTyping) {
+      setIsTyping(false);
+    }
   };
 
   if (!isChatEnabled) {
@@ -92,13 +124,14 @@ export const Chat = ({
       <ChatHeader />
       {variant === ChatVariant.PARTY_CHAT && (
         <>
-          <ChatList messages={reversedMessages} isHidden={isHidden} />
+          <ChatList messages={sortedMessages} isHidden={isHidden} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
             onChange={onChange}
             isHidden={isHidden}
             isFollowing={isFollowing}
+            isValidating={isValidating}
             isChatDelayed={isChatDelayed}
             isChatFollowersOnly={isChatFollowersOnly}
             isChatSlowMode={isChatSlowMode}

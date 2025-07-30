@@ -13,6 +13,7 @@ interface ChatFormProps {
   onChange: (value: string) => void;
   isHidden: boolean;
   isFollowing: boolean;
+  isValidating: boolean;
   isChatDelayed: boolean;
   isChatFollowersOnly: boolean;
   isChatSlowMode: boolean;
@@ -26,6 +27,7 @@ export const ChatForm = ({
   onChange,
   isHidden,
   isFollowing,
+  isValidating,
   isChatDelayed,
   isChatFollowersOnly,
   isChatSlowMode,
@@ -33,10 +35,15 @@ export const ChatForm = ({
   isChatProfanityFilter,
 }: ChatFormProps) => {
   const [isDelayBlocked, setIsDelayBlocked] = useState(false);
+  const [isSlowModeBlocked, setIsSlowModeBlocked] = useState(false);
   const isChatFollowersOnlyAndNotFollowing =
     isChatFollowersOnly && !isFollowing;
   const isDisabled =
-    isHidden || isDelayBlocked || isChatFollowersOnlyAndNotFollowing;
+    isHidden ||
+    isDelayBlocked ||
+    isSlowModeBlocked ||
+    isValidating ||
+    isChatFollowersOnlyAndNotFollowing;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,13 +51,28 @@ export const ChatForm = ({
 
     if (!value || isDisabled) return;
 
-    if (isChatDelayed && !isDelayBlocked) {
+    if (isChatSlowMode && !isSlowModeBlocked) {
+      setIsSlowModeBlocked(true);
+      setTimeout(() => {
+        setIsSlowModeBlocked(false);
+      }, 5000);
+
+      if (isChatDelayed && !isDelayBlocked) {
+        setIsDelayBlocked(true);
+        setTimeout(() => {
+          setIsDelayBlocked(false);
+          onSubmit();
+        }, 3000);
+      } else {
+        onSubmit();
+      }
+    } else if (isChatDelayed && !isDelayBlocked && !isChatSlowMode) {
       setIsDelayBlocked(true);
       setTimeout(() => {
         setIsDelayBlocked(false);
         onSubmit();
       }, 3000);
-    } else {
+    } else if (!isChatSlowMode && !isChatDelayed) {
       onSubmit();
     }
   };
@@ -58,6 +80,13 @@ export const ChatForm = ({
   if (isHidden) {
     return null;
   }
+
+  const getButtonText = () => {
+    if (isValidating) return "🔍 Checking...";
+    if (isSlowModeBlocked) return "🐌 Slow Mode...";
+    if (isDelayBlocked) return "⏱️ Sending...";
+    return "💬 Chat";
+  };
 
   return (
     <form
@@ -83,19 +112,13 @@ export const ChatForm = ({
           }
           className={cn(
             "border-white/10 text-sm",
-            isChatFollowersOnly && "rounded-t-none border-t-0",
+            isChatFollowersOnly && "rounded-t-none border-t-0"
           )}
         />
       </div>
       <div className="flex justify-end">
-        <Button
-          type="submit"
-          variant="blue"
-          size="sm"
-          disabled={isDisabled}
-          className="px-4 py-2 text-sm"
-        >
-          {isDelayBlocked ? "⏱️ Sending..." : "💬 Chat"}
+        <Button type="submit" variant="blue" size="sm" disabled={isDisabled}>
+          {getButtonText()}
         </Button>
       </div>
     </form>
