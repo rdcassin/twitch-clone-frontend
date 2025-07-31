@@ -7,7 +7,7 @@ import { useSidebar } from "@/lib/store/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { UserAvatar } from "@/components/user-avatar";
-import { LiveBadge } from "@/components/live-badge";
+import { LiveBadge } from "@/components/live-badges";
 
 interface UserItemProps {
   username: string;

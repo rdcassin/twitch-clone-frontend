@@ -17,10 +17,17 @@ export const Recommended = ({ data }: RecommendedProps) => {
 
   if (!data.length) {
     return (
-      <div className="text-center text-muted-foreground p-4 italic">
-        🗺️ All known realms explored.
-        <br />⏳ Check back soon for new adventures!
-      </div>
+      <>
+        {showLabel && (
+          <div className="pl-6 mb-4">
+            <p className="text-sm text-muted-foreground">🗺️ New Adventures</p>
+          </div>
+        )}
+        <div className="text-sm text-center text-muted-foreground p-4 italic">
+          🗺️ All known realms explored.
+          <br />⏳ Check back soon for new adventures!
+        </div>
+      </>
     );
   }
 
@@ -48,9 +55,6 @@ export const Recommended = ({ data }: RecommendedProps) => {
 export const RecommendedSkeleton = () => {
   return (
     <>
-      <div className="text-xs text-center text-muted-foreground mb-2">
-        🌌 Scanning the skies for new adventures...
-      </div>
       <ul className="px-2">
         {[...Array(3)].map((_, i) => (
           <UserItemSkeleton key={i} />

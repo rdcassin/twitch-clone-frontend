@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LiveBadge } from "@/components/live-badge";
+import { AltLiveBadge } from "@/components/live-badges";
 
 const avatarSizes = cva("", {
   variants: {
@@ -21,17 +21,17 @@ interface UserAvatarProps extends VariantProps<typeof avatarSizes> {
   username: string;
   imageUrl: string;
   isLive?: boolean;
-  showBadge?: boolean;
+  altBadge?: boolean;
 }
 
 export const UserAvatar = ({
   username,
   imageUrl,
   isLive,
-  showBadge,
+  altBadge,
   size,
 }: UserAvatarProps) => {
-  const canShowBadge = showBadge && isLive;
+  const canShowBadge = altBadge && isLive;
 
   return (
     <div className="relative">
@@ -49,7 +49,7 @@ export const UserAvatar = ({
       </Avatar>
       {canShowBadge && (
         <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
-          <LiveBadge />
+          <AltLiveBadge />
         </div>
       )}
     </div>

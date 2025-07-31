@@ -106,7 +106,7 @@ export const Chat = ({
           <p className="text-muted-foreground text-xs sm:text-sm">
             This adventure requires focus - party chat has been disabled
           </p>
-          <p className="text-xs text-muted-foreground italic">
+          <p className="text-xs text-muted-foreground italic hidden lg:block">
             {"Sometimes the greatest quests are undertaken in silence..."}
           </p>
         </div>

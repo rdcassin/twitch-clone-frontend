@@ -25,7 +25,10 @@ export const VolumeControl = ({
   return (
     <div className="flex items-center gap-2">
       <Hint label={label} asChild>
-        <button className="text-white hover:text-white/80" onClick={onToggle}>
+        <button
+          className="text-white hover:text-white/80 cursor-pointer"
+          onClick={onToggle}
+        >
           {isMuted ? "🔇" : value < 50 ? "🔉" : "🔊"}
         </button>
       </Hint>
