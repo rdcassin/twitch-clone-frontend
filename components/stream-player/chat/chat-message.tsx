@@ -32,7 +32,6 @@ export const ChatMessage = ({ data }: ChatMessageProps) => {
             {format(new Date(data.timestamp), "HH:mm")}
           </span>
         </div>
-
         <p className="text-xs sm:text-sm text-white break-words leading-relaxed">
           {data.message}
         </p>

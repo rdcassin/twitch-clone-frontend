@@ -4,9 +4,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ChatToggle } from "./chat-toggle";
 import { VariantToggle } from "./variant-toggle";
 import { ChatVariant, useChatSidebar } from "@/lib/store/chat-sidebar";
+import { useParticipants } from "@livekit/components-react";
 
 export const ChatHeader = () => {
   const { variant } = useChatSidebar();
+  const participants = useParticipants();
+
+  const participantCount = participants.length;
 
   return (
     <div className="relative p-3 border-b">
@@ -16,7 +20,7 @@ export const ChatHeader = () => {
       <p className="font-semibold text-primary text-center">
         {variant === ChatVariant.PARTY_CHAT
           ? "💬 Party Chat"
-          : "👥 All Adventurers"}
+          : `👥 Adventurers (${participantCount})`}
       </p>
       <div className="absolute right-2 top-2">
         <VariantToggle />

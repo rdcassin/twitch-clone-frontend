@@ -38,8 +38,10 @@ export const CopyButton = ({ value }: CopyButtonProps) => {
       disabled={!value || isCopied}
       variant="ghost"
       size="sm"
+      className="flex-shrink-0 h-9 w-9 sm:h-10 sm:w-10 p-0"
+      aria-label={isCopied ? "Copied!" : "Copy to clipboard"}
     >
-      <Icon className="h-4 w-4" />
+      <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
     </Button>
   );
 };

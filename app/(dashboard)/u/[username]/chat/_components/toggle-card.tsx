@@ -49,22 +49,41 @@ export const ToggleCard = ({
   };
 
   return (
-    <div className="rounded-xl bg-muted p-6">
-      <div className="flex items-center justify-between">
-        <p className="font-semibold shrink-0">{label}</p>
-        {description && (
-          <p className="text-xs text-muted-foreground mt-1">{description}</p>
-        )}
-        <Switch
-          checked={value}
-          onCheckedChange={onChange}
-          disabled={isPending}
-        />
+    <div className="rounded-lg sm:rounded-xl bg-muted p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-sm sm:text-base mb-1 sm:mb-0">
+            {label}
+          </p>
+          {description && (
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              {description}
+            </p>
+          )}
+        </div>
+        <div className="flex-shrink-0 self-start sm:self-center">
+          <Switch
+            checked={value}
+            onCheckedChange={onChange}
+            disabled={isPending}
+            className="data-[state=checked]:bg-primary"
+          />
+        </div>
       </div>
     </div>
   );
 };
 
 export const ToggleCardSkeleton = () => {
-  return <Skeleton className="rounded-xl p-10 w-full" />;
+  return (
+    <div className="rounded-lg sm:rounded-xl bg-muted p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="flex-1 space-y-2">
+          <Skeleton className="h-4 w-32 sm:w-40" />
+          <Skeleton className="h-3 w-48 sm:w-64" />
+        </div>
+        <Skeleton className="h-6 w-11 rounded-full" />
+      </div>
+    </div>
+  );
 };

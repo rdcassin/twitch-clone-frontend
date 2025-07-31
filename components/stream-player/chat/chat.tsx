@@ -8,12 +8,12 @@ import {
 } from "@livekit/components-react";
 import { ConnectionState } from "livekit-client";
 import { useMemo, useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
-import { ChatHeader } from "./chat-header";
-import { ChatForm } from "./chat-form";
-import { ChatList } from "./chat-list";
+import { ChatHeader, ChatHeaderSkeleton } from "./chat-header";
+import { ChatForm, ChatFormSkeleton } from "./chat-form";
+import { ChatList, ChatListSkeleton } from "./chat-list";
 import { validateChatMessage } from "@/actions/chat-validation";
 import { toast } from "sonner";
+import { ChatAll } from "./chat-all";
 
 interface ChatProps {
   viewerName: string;
@@ -40,20 +40,12 @@ export const Chat = ({
   isChatLinksAllowed,
   isChatProfanityFilter,
 }: ChatProps) => {
-  const {
-    isCollapsed,
-    variant,
-    toggleCollapse,
-    setCollapsed,
-    onChangeVariant,
-  } = useChatSidebar();
-  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const { variant } = useChatSidebar();
   const connectionState = useConnectionState();
   const participant = useRemoteParticipant(hostIdentity);
 
   const isOnline = participant && connectionState === ConnectionState.Connected;
   const isHidden = !isChatEnabled || !isOnline;
-  const isDisabled = !isChatEnabled || (isChatFollowersOnly && !isFollowing);
 
   const [value, setValue] = useState("");
   const { chatMessages: messages, send } = useChat();
@@ -105,14 +97,17 @@ export const Chat = ({
 
   if (!isChatEnabled) {
     return (
-      <div className="flex flex-col justify-center items-center h-full space-y-3">
-        <div className="text-4xl">💬</div>
-        <div className="text-center">
-          <p className="text-muted-foreground text-sm font-medium">
-            Party chat is disabled
+      <div className="flex flex-col justify-center items-center h-full space-y-3 sm:space-y-4 p-4 sm:p-6">
+        <div className="text-4xl sm:text-6xl animate-pulse">⚔️</div>
+        <div className="text-center space-y-2 max-w-xs sm:max-w-none px-2">
+          <h3 className="text-base sm:text-lg font-semibold">
+            🤫 Silent Quest Mode
+          </h3>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            This adventure requires focus - party chat has been disabled
           </p>
-          <p className="text-muted-foreground text-xs">
-            The quest leader has disabled party communication
+          <p className="text-xs text-muted-foreground italic">
+            {"Sometimes the greatest quests are undertaken in silence..."}
           </p>
         </div>
       </div>
@@ -124,7 +119,7 @@ export const Chat = ({
       <ChatHeader />
       {variant === ChatVariant.PARTY_CHAT && (
         <>
-          <ChatList messages={sortedMessages} isHidden={isHidden} />
+          <ChatList messages={sortedMessages} />
           <ChatForm
             onSubmit={onSubmit}
             value={value}
@@ -141,10 +136,18 @@ export const Chat = ({
         </>
       )}
       {variant === ChatVariant.ADVENTURERS && (
-        <>
-          <p>All Adventurers</p>
-        </>
+        <ChatAll viewerName={viewerName} hostName={hostName} />
       )}
+    </div>
+  );
+};
+
+export const ChatSkeleton = () => {
+  return (
+    <div className="flex flex-col bg-background border-l border-b pt-0 h-[calc(100vh-80px)]">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
     </div>
   );
 };
