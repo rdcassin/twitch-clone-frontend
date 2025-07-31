@@ -112,7 +112,7 @@ export const ChatForm = ({
           }
           className={cn(
             "border-white/10 text-sm",
-            isChatFollowersOnly && "rounded-t-none border-t-0"
+            isChatFollowersOnly && "rounded-t-none border-t-0",
           )}
         />
       </div>

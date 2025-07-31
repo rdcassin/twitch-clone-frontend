@@ -21,7 +21,7 @@ const filter = createChatFilter();
 
 export const validateChatMessage = async (
   message: string,
-  hostIdentity: string
+  hostIdentity: string,
 ) => {
   try {
     const stream = await prisma.stream.findUnique({
