@@ -9,9 +9,7 @@ export const updateStream = async (values: Partial<Stream>) => {
   try {
     const self = await getSelf();
     const selfStream = await prisma.stream.findUnique({
-      where: {
-        userId: self.id,
-      },
+      where: { userId: self.id },
     });
 
     if (!selfStream) {
@@ -23,6 +21,8 @@ export const updateStream = async (values: Partial<Stream>) => {
 
     const validData = {
       name: values.name,
+      thumbnailUrl: values.thumbnailUrl,
+      thumbnailKey: values.thumbnailKey,
       isChatEnabled: values.isChatEnabled,
       isChatDelayed: values.isChatDelayed,
       isChatFollowersOnly: values.isChatFollowersOnly,
@@ -32,24 +32,22 @@ export const updateStream = async (values: Partial<Stream>) => {
     };
 
     const stream = await prisma.stream.update({
-      where: {
-        id: selfStream.id,
-      },
-      data: {
-        ...validData,
-      },
+      where: { id: selfStream.id },
+      data: validData,
     });
 
     revalidatePath(`/u/${self.username}/chat`);
     revalidatePath(`/u/${self.username}`);
     revalidatePath(`/${self.username}`);
+    revalidatePath(`/u/${self.username}/keys`);
 
     return {
       success: true,
       data: stream,
       message: "🎮 Quest settings updated successfully!",
     };
-  } catch {
+  } catch (error) {
+    console.error("updateStream error:", error);
     return {
       success: false,
       message: "⚠️ Something went wrong updating quest settings",

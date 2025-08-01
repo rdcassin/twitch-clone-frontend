@@ -68,6 +68,7 @@ model Stream {
   name         String
   description  String? @db.Text
   thumbnailUrl String? @db.Text
+  thumbnailKey String? @db.Text
   ingressId    String? @unique
   serverUrl    String? @db.Text
   streamKey    String? @db.Text

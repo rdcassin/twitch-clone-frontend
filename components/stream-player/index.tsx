@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Chat, ChatSkeleton } from "./chat/chat";
 import { ChatToggle } from "./chat/chat-toggle";
 import { Header, HeaderSkeleton } from "./header";
+import { QuestCard } from "./quest-card";
 
 interface StreamPlayerProps {
   user: User & { stream: Stream | null };
@@ -59,6 +60,12 @@ export const StreamPlayer = ({
             imageUrl={user.imageUrl}
             isFollowing={isFollowing}
             questName={stream.name}
+          />
+          <QuestCard
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            questName={stream.name}
+            thumbnailUrl={stream.thumbnailUrl}
           />
         </div>
         <div className={cn("col-span-1", isCollapsed && "hidden")}>

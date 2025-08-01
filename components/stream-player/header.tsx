@@ -1,7 +1,7 @@
 "use client";
 
 import { UserAvatar, UserAvatarSkeleton } from "@/components/user-avatar";
-import { VerifiedMark } from "../verified-mark";
+import { VerifiedMark } from "@/components/verified-mark";
 import { Actions, ActionsSkeleton } from "./actions";
 import {
   useParticipants,
