@@ -10,7 +10,7 @@ export const OfflineVideo = ({ username }: OfflineVideoProps) => {
         <h3 className="text-sm sm:text-lg lg:text-xl font-bold">
           🎯 {username} is not currently on a quest
         </h3>
-        <p className="hidden sm:block sm:text-sm text-muted-foreground">
+        <p className="hidden sm:inline sm:text-sm text-muted-foreground">
           The adventurer is taking a break. Check back later for their next epic
           journey!
         </p>

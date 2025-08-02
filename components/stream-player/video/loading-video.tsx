@@ -10,7 +10,7 @@ export const LoadingVideo = ({ label }: LoadingVideoProps) => {
         <h3 className="text-xs sm:text-lg lg:text-xl font-bold">
           🎮 Connecting...
         </h3>
-        <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
+        <p className="text-xs sm:text-sm text-muted-foreground hidden sm:inline">
           Establishing connection to the adventure realm...
         </p>
         <div className="flex items-center justify-center gap-1 sm:gap-2 text-xs text-muted-foreground">

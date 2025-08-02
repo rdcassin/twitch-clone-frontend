@@ -104,7 +104,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
             </div>
 
             <div className="flex items-center gap-1 sm:gap-3 flex-shrink-0">
-              <div className="hidden sm:block">
+              <div className="hidden sm:inline">
                 <VolumeControl
                   value={volume}
                   onChange={onVolumeChange}

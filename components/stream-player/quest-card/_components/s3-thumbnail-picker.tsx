@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Hint } from "@/components/hint";
 
 interface S3ThumbnailPickerProps {
   previewUrl: string | null;
@@ -36,19 +37,20 @@ export const S3ThumbnailPicker = ({
         <div className="relative aspect-video w-full max-w-[200px] mx-auto rounded-md overflow-hidden border">
           <Image
             fill
-            sizes=""
             src={previewUrl}
             alt="Quest Banner preview"
             className="object-cover"
           />
-          <button
-            type="button"
-            onClick={onDelete}
-            className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 cursor-pointer"
-            disabled={disabled}
-          >
-            🗑️
-          </button>
+          <Hint label="Remove Quest Banner" asChild>
+            <button
+              type="button"
+              onClick={onDelete}
+              className="absolute top-2 right-2 z-10 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 cursor-pointer"
+              disabled={disabled}
+            >
+              🗑️
+            </button>
+          </Hint>
         </div>
       )}
       <input
@@ -61,7 +63,7 @@ export const S3ThumbnailPicker = ({
       />
       <Button
         type="button"
-        variant="outline"
+        variant="blue"
         className="w-full sm:w-auto flex justify-center"
         disabled={disabled}
         onClick={handleButtonClick}

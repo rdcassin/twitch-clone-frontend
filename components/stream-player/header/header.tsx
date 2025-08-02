@@ -60,21 +60,23 @@ export const Header = ({
           </p>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center w-full sm:w-auto">
-        {isLive ? (
-          <div className="font-semibold flex gap-x-2 items-center text-rose-400">
-            <UserIcon className="h-4 w-4" />
-            <p className="text-sm">{participantCount}</p>
-            <p className="hidden lg:block text-xs">
-              {participantCount === 1 ? "Adventurer" : "Adventurers"}
-            </p>
-          </div>
-        ) : (
-          <div className="font-semibold text-muted-foreground flex items-center gap-1">
-            <span>⚫</span>
-            <span className="text-sm">Quest Offline</span>
-          </div>
-        )}
+      <div className="flex flex-row gap-2 sm:gap-3 items-center w-full sm:w-auto justify-between mt-2 sm:mt-0">
+        <div>
+          {isLive ? (
+            <div className="font-semibold flex gap-x-2 items-center text-rose-400">
+              <UserIcon className="h-4 w-4" />
+              <p className="text-sm">{participantCount}</p>
+              <p className="hidden lg:block text-xs">
+                {participantCount === 1 ? "Adventurer" : "Adventurers"}
+              </p>
+            </div>
+          ) : (
+            <div className="font-semibold text-muted-foreground flex items-center gap-1">
+              <span>⚫</span>
+              <span className="text-sm">Offline</span>
+            </div>
+          )}
+        </div>
         <Actions
           isFollowing={isFollowing}
           hostIdentity={hostIdentity}
@@ -96,7 +98,7 @@ export const HeaderSkeleton = () => {
         </div>
       </div>
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center w-full sm:w-auto">
-        <Skeleton className="h-4 w-16" />
+        <Skeleton className="h-4 w-16 hidden sm:inline" />
         <ActionsSkeleton />
       </div>
     </div>

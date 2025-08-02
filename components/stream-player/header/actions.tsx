@@ -60,7 +60,7 @@ export const Actions = ({
 
   return (
     <div className="flex items-center">
-      {!isHost && (
+      {isHost && (
         <Button
           variant={isFollowing ? "ghost" : "blue"}
           size="sm"

@@ -3,16 +3,23 @@
 import { useViewerToken } from "@/hooks/use-viewer-token";
 import { Stream, User } from "@prisma/client";
 import { LiveKitRoom } from "@livekit/components-react";
-import { Video, VideoSkeleton } from "./video";
+import { Video, VideoSkeleton } from "@/components/stream-player/video/video";
 import { useChatSidebar } from "@/lib/store/chat-sidebar";
 import { cn } from "@/lib/utils";
-import { Chat, ChatSkeleton } from "./chat/chat";
-import { ChatToggle } from "./chat/chat-toggle";
-import { Header, HeaderSkeleton } from "./header";
-import { QuestCard } from "./quest-card";
+import { Chat, ChatSkeleton } from "@/components/stream-player/chat/chat";
+import { ChatToggle } from "@/components/stream-player/chat/chat-toggle";
+import {
+  Header,
+  HeaderSkeleton,
+} from "@/components/stream-player/header/header";
+import { QuestCard } from "@/components/stream-player/quest-card/quest-card";
+import { AboutCard } from "@/components/stream-player/about-card/about-card";
 
 interface StreamPlayerProps {
-  user: User & { stream: Stream | null };
+  user: User & {
+    stream: Stream | null;
+    _count: { userFollowers: number };
+  };
   stream: Stream;
   isFollowing: boolean;
 }
@@ -67,8 +74,15 @@ export const StreamPlayer = ({
             questName={stream.name}
             thumbnailUrl={stream.thumbnailUrl}
           />
+          <AboutCard
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            bio={user.bio}
+            partySize={user._count.userFollowers}
+          />
         </div>
-        <div className={cn("col-span-1", isCollapsed && "hidden")}>
+        <div className={cn("col-span-1 mt-4", isCollapsed && "hidden")}>
           <Chat
             viewerName={name}
             hostName={user.username}
