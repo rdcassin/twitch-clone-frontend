@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Hint } from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestCommandSidebar } from "@/lib/store/quest-command-sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 export const Toggle = () => {
   const { isCollapsed, toggleCollapse } = useQuestCommandSidebar();

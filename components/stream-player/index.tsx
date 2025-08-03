@@ -5,7 +5,7 @@ import { Stream, User } from "@prisma/client";
 import { LiveKitRoom } from "@livekit/components-react";
 import { Video, VideoSkeleton } from "@/components/stream-player/video/video";
 import { useChatSidebar } from "@/lib/store/chat-sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { Chat, ChatSkeleton } from "@/components/stream-player/chat/chat";
 import { ChatToggle } from "@/components/stream-player/chat/chat-toggle";
 import {

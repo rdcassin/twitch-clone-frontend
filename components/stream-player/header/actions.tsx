@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { useRouter } from "next/navigation";
 import { joinParty, leaveParty } from "@/actions/follow";
 import { useTransition } from "react";

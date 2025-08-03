@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuestCommandSidebar } from "@/lib/store/quest-command-sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
 
 interface NavigationItemProps {

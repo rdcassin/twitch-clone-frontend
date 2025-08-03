@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebar } from "@/lib/store/sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 interface ContainerProps {
   children: React.ReactNode;

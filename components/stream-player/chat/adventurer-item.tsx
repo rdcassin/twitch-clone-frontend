@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { MinusCircle } from "lucide-react";
 import { toast } from "sonner";
 import { banishAdventurer } from "@/actions/block";
-import { cn, stringToColor } from "@/lib/utils";
+import { cn, stringToColor } from "@/lib/utils/utils";
 
 interface AdventurerItemProps {
   hostName: string;

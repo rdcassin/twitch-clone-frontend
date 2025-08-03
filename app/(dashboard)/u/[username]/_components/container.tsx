@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuestCommandSidebar } from "@/lib/store/quest-command-sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 interface ContainerProps {
   children: React.ReactNode;

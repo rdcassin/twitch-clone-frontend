@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
