@@ -5,11 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-interface BlockResult {
-  success: boolean;
-  message: string;
-}
-
 interface BlockProps {
   isBlocking: boolean;
   userId: string;
@@ -18,11 +13,11 @@ interface BlockProps {
 export const Block = ({ isBlocking, userId }: BlockProps) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleResult = ({ success, message }: BlockResult) => {
-    if (success) {
-      toast.success(message);
+  const handleResult = (result: { success: boolean; message?: string }) => {
+    if (result.success) {
+      toast.success(result.message || "⚔️ Adventurer banished from the quest!");
     } else {
-      toast.error(message);
+      toast.error(result.message || "🚫 Failed to banish adventurer");
     }
   };
 

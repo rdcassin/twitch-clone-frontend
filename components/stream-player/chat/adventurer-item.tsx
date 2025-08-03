@@ -1,12 +1,12 @@
 "use client";
 
-import { useTransition, useMemo } from "react";
+import { useTransition } from "react";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { MinusCircle } from "lucide-react";
 import { toast } from "sonner";
 import { banishAdventurer } from "@/actions/block";
-import { cn } from "@/lib/utils";
+import { cn, stringToColor } from "@/lib/utils";
 
 interface AdventurerItemProps {
   hostName: string;
@@ -22,15 +22,14 @@ export const AdventurerItem = ({
   participantIdentity,
 }: AdventurerItemProps) => {
   const [isPending, startTransition] = useTransition();
-  const color = useMemo(() => {
-    return `hsl(${Math.random() * 360}, 70%, 60%)`;
-  }, []);
+  const color = stringToColor(participantName || "");
 
   const isSelf = participantName === viewerName;
   const isHost = participantName === hostName;
+  const youAreHost = viewerName === hostName;
 
   const handleBlock = () => {
-    if (!participantName || isSelf || !isHost) return;
+    if (!participantName || !youAreHost || isSelf || isHost) return;
 
     startTransition(() => {
       banishAdventurer(participantIdentity)
@@ -40,7 +39,7 @@ export const AdventurerItem = ({
               `⚔️ ${participantName} has been banished from the quest`,
             );
           } else {
-            toast.error(result.message || "Failed to banish adventurer");
+            toast.error("⚠️ Failed to banish adventurer");
           }
         })
         .catch(() =>
@@ -79,7 +78,7 @@ export const AdventurerItem = ({
       </div>
       {!isSelf && !isHost && (
         <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-          <Hint label="Banish adventurer">
+          <Hint label="Banish adventurer" asChild>
             <Button
               onClick={handleBlock}
               variant="ghost"

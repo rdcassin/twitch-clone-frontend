@@ -10,10 +10,15 @@ import { useState } from "react";
 
 interface ChatAllProps {
   hostName: string;
+  hostIdentity: string;
   viewerName: string;
 }
 
-export const ChatAll = ({ hostName, viewerName }: ChatAllProps) => {
+export const ChatAll = ({
+  hostName,
+  hostIdentity,
+  viewerName,
+}: ChatAllProps) => {
   const [value, setValue] = useState("");
   const [debouncedValue] = useDebounceValue(value, 500);
   const participants = useParticipants();
@@ -56,18 +61,30 @@ export const ChatAll = ({ hostName, viewerName }: ChatAllProps) => {
         className="border-white/10 text-sm mb-4"
       />
       <ScrollArea className="gap-y-2 px-2">
-        <p className="text-center text-sm text-muted-foreground hidden last:block p-2">
-          🎯 No adventurers found
-        </p>
-        {filteredParticipants.map((participant) => (
-          <AdventurerItem
-            key={participant.identity}
-            hostName={hostName}
-            viewerName={viewerName}
-            participantName={participant.name}
-            participantIdentity={participant.identity}
-          />
-        ))}
+        <AdventurerItem
+          key={hostIdentity}
+          hostName={hostName}
+          viewerName={viewerName}
+          participantName={hostName}
+          participantIdentity={hostIdentity}
+        />
+
+        {filteredParticipants
+          .filter(
+            (p) =>
+              p.identity !== hostIdentity &&
+              p.identity !== `host-${hostIdentity}` &&
+              p.name !== hostName,
+          )
+          .map((participant) => (
+            <AdventurerItem
+              key={participant.identity}
+              hostName={hostName}
+              viewerName={viewerName}
+              participantName={participant.name}
+              participantIdentity={participant.identity}
+            />
+          ))}
       </ScrollArea>
     </div>
   );

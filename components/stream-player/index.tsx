@@ -39,7 +39,10 @@ export const StreamPlayer = ({
   return (
     <>
       {isCollapsed && (
-        <div className="hidden lg:block fixed top-[100px] right-2 z-50">
+        <div
+          className="hidden lg:flex fixed top-0 right-2 z-50 items-center h-12"
+          style={{ top: "80px" }}
+        >
           <ChatToggle />
         </div>
       )}
@@ -82,7 +85,7 @@ export const StreamPlayer = ({
             partySize={user._count.userFollowers}
           />
         </div>
-        <div className={cn("col-span-1 mt-4", isCollapsed && "hidden")}>
+        <div className={cn("col-span-1 mt-4 sm:mt-0", isCollapsed && "hidden")}>
           <Chat
             viewerName={name}
             hostName={user.username}

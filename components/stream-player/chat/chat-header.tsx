@@ -1,28 +1,53 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { useParticipants } from "@livekit/components-react";
 import { ChatToggle } from "./chat-toggle";
 import { VariantToggle } from "./variant-toggle";
 import { ChatVariant, useChatSidebar } from "@/lib/store/chat-sidebar";
-import { useParticipants } from "@livekit/components-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export const ChatHeader = () => {
+interface ChatHeaderProps {
+  hostIdentity: string;
+  hostName: string;
+}
+
+export const ChatHeader = ({ hostIdentity, hostName }: ChatHeaderProps) => {
   const { variant } = useChatSidebar();
   const participants = useParticipants();
 
-  const participantCount = participants.length;
+  const countUniqueAdventurers = (
+    participants: { identity: string; name?: string }[],
+    hostIdentity: string,
+    hostName: string,
+  ) => {
+    const ids = new Set<string>();
+    participants.forEach((participant) => {
+      let idKey = participant.identity.replace(/^host-/, "");
+      if (idKey === hostIdentity || participant.name === hostName) {
+        idKey = hostIdentity;
+      }
+      ids.add(idKey);
+    });
+    return ids.size;
+  };
+
+  const participantCount = countUniqueAdventurers(
+    participants,
+    hostIdentity,
+    hostName,
+  );
 
   return (
-    <div className="relative p-3 border-b">
-      <div className="absolute left-2 top-2 hidden lg:block">
+    <div className="relative flex items-center h-12 border-b">
+      <div className="absolute left-2 top-1/2 -translate-y-1/2 hidden lg:block">
         <ChatToggle />
       </div>
-      <p className="font-semibold text-primary text-center">
+      <p className="font-semibold text-primary text-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         {variant === ChatVariant.PARTY_CHAT
           ? "💬 Party Chat"
           : `👥 Adventurers (${participantCount})`}
       </p>
-      <div className="absolute right-2 top-2">
+      <div className="absolute right-2 top-1/2 -translate-y-1/2">
         <VariantToggle />
       </div>
     </div>

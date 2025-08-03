@@ -1,5 +1,6 @@
 "use client";
 
+import { stringToColor } from "@/lib/utils";
 import { ReceivedChatMessage } from "@livekit/components-react";
 import { format } from "date-fns";
 
@@ -8,7 +9,7 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage = ({ data }: ChatMessageProps) => {
-  const color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+  const color = stringToColor(data.from?.name || "");
 
   return (
     <div className="flex gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-md hover:bg-white/5 transition-colors">

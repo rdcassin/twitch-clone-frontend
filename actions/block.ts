@@ -2,35 +2,42 @@
 
 import { revalidatePath } from "next/cache";
 import { blockUser, unblockUser } from "@/lib/services/block-service";
+import { getSelf } from "@/lib/services/auth-service";
+import { RoomServiceClient } from "livekit-server-sdk";
+
+const roomService = new RoomServiceClient(
+  process.env.LIVEKIT_URL!,
+  process.env.LIVEKIT_API_KEY!,
+  process.env.LIVEKIT_API_SECRET!,
+);
 
 export const banishAdventurer = async (id: string) => {
+  const self = await getSelf();
+
+  let blockedUser;
+
   try {
-    const blockedUser = await blockUser(id);
-
-    revalidatePath("/");
-
-    if (blockedUser.success && blockedUser.data) {
-      revalidatePath(`/${blockedUser.data.blocked.username}`);
-    }
-
-    return blockedUser;
+    blockedUser = await blockUser(id);
   } catch {
-    return { success: false, message: "⚠️ Something went wrong" };
+    // Target Adventurer is not logged in
   }
+
+  try {
+    await roomService.removeParticipant(self.id, id);
+  } catch {
+    // Target Adventurer is not in the room
+  }
+
+  revalidatePath(`/u/${self.username}/adventurers`);
+
+  return { success: true, data: blockedUser };
 };
 
 export const welcomeBackAdventurer = async (id: string) => {
-  try {
-    const unblockedUser = await unblockUser(id);
+  const self = await getSelf();
+  const unblockedUser = await unblockUser(id);
 
-    revalidatePath("/");
+  revalidatePath(`/u/${self.username}/adventurers`);
 
-    if (unblockedUser.success && unblockedUser.data) {
-      revalidatePath(`/${unblockedUser.data.blocked.username}`);
-    }
-
-    return unblockedUser;
-  } catch {
-    return { success: false, message: "⚠️ Something went wrong" };
-  }
+  return { success: true, data: unblockedUser };
 };

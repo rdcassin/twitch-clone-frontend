@@ -5,6 +5,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhooks/(.*)",
   "/",
   "/search",
+  "/:username",
   "/u/(.*)", // All /u/ routes are public but secured by the Layout with getSelfByUsername();
 ]);
 

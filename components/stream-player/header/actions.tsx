@@ -60,9 +60,9 @@ export const Actions = ({
 
   return (
     <div className="flex items-center">
-      {isHost && (
+      {!isHost && (
         <Button
-          variant={isFollowing ? "ghost" : "blue"}
+          variant="primary"
           size="sm"
           className={cn(
             "w-full sm:w-auto",

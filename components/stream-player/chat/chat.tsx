@@ -116,7 +116,7 @@ export const Chat = ({
 
   return (
     <div className="flex flex-col bg-background border-l border-b pt-0 h-[calc(100vh-80px)]">
-      <ChatHeader />
+      <ChatHeader hostIdentity={hostIdentity} hostName={hostName} />
       {variant === ChatVariant.PARTY_CHAT && (
         <>
           <ChatList messages={sortedMessages} />
@@ -136,7 +136,11 @@ export const Chat = ({
         </>
       )}
       {variant === ChatVariant.ADVENTURERS && (
-        <ChatAll viewerName={viewerName} hostName={hostName} />
+        <ChatAll
+          viewerName={viewerName}
+          hostName={hostName}
+          hostIdentity={hostIdentity}
+        />
       )}
     </div>
   );

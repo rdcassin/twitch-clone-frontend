@@ -10,6 +10,7 @@ interface AboutCardProps {
   viewerIdentity: string;
   bio: string | null;
   partySize: number;
+  isVerified?: boolean;
 }
 
 export const AboutCard = ({
@@ -18,6 +19,7 @@ export const AboutCard = ({
   viewerIdentity,
   bio,
   partySize,
+  isVerified,
 }: AboutCardProps) => {
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
@@ -32,14 +34,14 @@ export const AboutCard = ({
             {hostName}
             {"'s Chronicles"}
           </div>
-          <VerifiedMark />
+          {isVerified && <VerifiedMark />}
         </div>
         <div className="hidden sm:flex items-center justify-between mb-2">
           <div className="flex items-center gap-x-2 font-semibold text-lg lg:text-2xl">
             <span className="inline">🧙</span>
             {hostName}
             {"'s Chronicles"}
-            <VerifiedMark />
+            {isVerified && <VerifiedMark />}
           </div>
           {isHost && (
             <div className="w-auto ml-4">
