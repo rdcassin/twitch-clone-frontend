@@ -1,7 +1,6 @@
 "use client";
 
 import { useViewerToken } from "@/hooks/use-viewer-token";
-import { Stream, User } from "@prisma/client";
 import { LiveKitRoom } from "@livekit/components-react";
 import { Video, VideoSkeleton } from "@/components/stream-player/video/video";
 import { useChatSidebar } from "@/lib/store/chat-sidebar";
@@ -14,13 +13,11 @@ import {
 } from "@/components/stream-player/header/header";
 import { QuestCard } from "@/components/stream-player/quest-card/quest-card";
 import { AboutCard } from "@/components/stream-player/about-card/about-card";
+import { SafeStream, SafeUserWithFollowers } from "@/lib/utils/safe-filter";
 
 interface StreamPlayerProps {
-  user: User & {
-    stream: Stream | null;
-    _count: { userFollowers: number };
-  };
-  stream: Stream;
+  user: SafeUserWithFollowers;
+  stream: SafeStream;
   isFollowing: boolean;
 }
 
@@ -51,7 +48,7 @@ export const StreamPlayer = ({
         serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
         className={cn(
           "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full",
-          isCollapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2",
+          isCollapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
         )}
       >
         <div
@@ -59,7 +56,7 @@ export const StreamPlayer = ({
             "space-y-4 col-span-1 lg:overflow-y-auto hidden-scrollbar",
             isCollapsed
               ? "lg:col-span-2 xl:col-span-2 2xl:col-span-2"
-              : "lg:col-span-2 xl:col-span-2 2xl:col-span-5",
+              : "lg:col-span-2 xl:col-span-2 2xl:col-span-5"
           )}
         >
           <Video hostName={user.username} hostIdentity={user.id} />
@@ -117,7 +114,7 @@ export const StreamPlayerSkeleton = () => {
       <div
         className={cn(
           "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full",
-          isCollapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2",
+          isCollapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
         )}
       >
         <div
@@ -125,7 +122,7 @@ export const StreamPlayerSkeleton = () => {
             "space-y-4 col-span-1 lg:overflow-y-auto hidden-scrollbar",
             isCollapsed
               ? "lg:col-span-2 xl:col-span-2 2xl:col-span-2"
-              : "lg:col-span-2 xl:col-span-2 2xl:col-span-5",
+              : "lg:col-span-2 xl:col-span-2 2xl:col-span-5"
           )}
         >
           <VideoSkeleton />

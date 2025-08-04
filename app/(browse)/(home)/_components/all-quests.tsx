@@ -7,11 +7,11 @@ export const AllQuests = async () => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4 text-center">
+      <h2 className="text-base sm:text-xl font-semibold mb-4 text-center">
         🌌 Quests Gathering Adventurers
       </h2>
       {data.length === 0 && (
-        <div className="text-muted-foreground text-sm italic text-center mb-8">
+        <div className="text-muted-foreground text-xs sm:text-sm italic text-center mb-8">
           No quests are currently being undertaken.
           <br />
           Check back soon, or start your own legend!

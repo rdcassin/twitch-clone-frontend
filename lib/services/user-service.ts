@@ -5,8 +5,25 @@ export const getUserByUsername = async (username: string) => {
     where: {
       username,
     },
-    include: {
-      stream: true,
+    select: {
+      id: true,
+      username: true,
+      bio: true,
+      imageUrl: true,
+      stream: {
+        select: {
+          id: true,
+          name: true,
+          thumbnailUrl: true,
+          isLive: true,
+          isChatEnabled: true,
+          isChatDelayed: true,
+          isChatFollowersOnly: true,
+          isChatSlowMode: true,
+          isChatLinksAllowed: true,
+          isChatProfanityFilter: true,
+        },
+      },
       _count: {
         select: {
           userFollowers: true,
@@ -23,8 +40,25 @@ export const getUserById = async (id: string) => {
     where: {
       id,
     },
-    include: {
-      stream: true,
+    select: {
+      id: true,
+      username: true,
+      bio: true,
+      imageUrl: true,
+      stream: {
+        select: {
+          id: true,
+          name: true,
+          thumbnailUrl: true,
+          isLive: true,
+          isChatEnabled: true,
+          isChatDelayed: true,
+          isChatFollowersOnly: true,
+          isChatSlowMode: true,
+          isChatLinksAllowed: true,
+          isChatProfanityFilter: true,
+        },
+      },
     },
   });
 
