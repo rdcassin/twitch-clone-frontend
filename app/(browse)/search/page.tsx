@@ -11,7 +11,7 @@ interface SearchPageProps {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { q } = await searchParams;
-  
+
   if (!q) {
     redirect("/");
   }
