@@ -23,7 +23,7 @@ export const getSelfByUsername = async (username: string) => {
   const self = await currentUser();
 
   if (!self || !self.username) {
-    throw new Error("⚔️ Unauthorized - must be logged in");
+    return null; // Not logged in
   }
 
   const user = await prisma.user.findUnique({
@@ -31,11 +31,11 @@ export const getSelfByUsername = async (username: string) => {
   });
 
   if (!user) {
-    throw new Error("⚔️ Adventurer not found");
+    return null; // Not a valid user
   }
 
   if (self.username !== user.username) {
-    throw new Error("🚫 Cannot access another adventurer's quest command");
+    return null; // Not your own dashboard
   }
 
   return user;

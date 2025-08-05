@@ -94,7 +94,7 @@ export const blockUser = async (id: string) => {
     if (existingBlock) {
       return {
         success: false,
-        message: "✋ Adventurer already banished from your party!",
+        message: `✋ ${otherUser.username} was already banished from your party!`,
       };
     }
 
@@ -112,7 +112,7 @@ export const blockUser = async (id: string) => {
     return {
       success: true,
       data: block,
-      message: "🛡️ Adventurer banished from your party!",
+      message: `🛡️ ${otherUser.username} banished from your party!`,
     };
   } catch {
     return {
@@ -129,7 +129,7 @@ export const unblockUser = async (id: string) => {
     if (self.id === id) {
       return {
         success: false,
-        message: "🚫 Cannot welcome yourself back to your own party",
+        message: "🚫 Cannot restore peace with yourself back to your own party",
       };
     }
 
@@ -153,7 +153,7 @@ export const unblockUser = async (id: string) => {
     if (!existingBlock) {
       return {
         success: false,
-        message: "✋ Peace already restored with adventurer!",
+        message: `✋ Peace already restored with ${otherUser.username}!`,
       };
     }
 
@@ -170,7 +170,7 @@ export const unblockUser = async (id: string) => {
     return {
       success: true,
       data: unblock,
-      message: "🕊️ Peace restored with adventurer!",
+      message: `🕊️ Peace restored with ${otherUser.username}!`,
     };
   } catch {
     return {
@@ -178,4 +178,19 @@ export const unblockUser = async (id: string) => {
       message: "⚠️ Something went wrong while restoring peace with adventurer",
     };
   }
+};
+
+export const getBlockedUsers = async () => {
+  const self = await getSelf();
+
+  const blockedUsers = await prisma.block.findMany({
+    where: {
+      blockerId: self.id,
+    },
+    include: {
+      blocked: true,
+    },
+  });
+
+  return blockedUsers;
 };

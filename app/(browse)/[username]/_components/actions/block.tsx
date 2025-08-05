@@ -1,6 +1,6 @@
 "use client";
 
-import { banishAdventurer, welcomeBackAdventurer } from "@/actions/block";
+import { banishAdventurer, restoreAdventurer } from "@/actions/block";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -13,18 +13,20 @@ interface BlockProps {
 export const Block = ({ isBlocking, userId }: BlockProps) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleResult = (result: { success: boolean; message?: string }) => {
-    if (result.success) {
-      toast.success(result.message || "⚔️ Adventurer banished from the quest!");
+  const handleResult = (result?: { success: boolean; message: string }) => {
+    if (result && result.success) {
+      toast.success(result.message);
+    } else if (result && result.message) {
+      toast.error(result.message);
     } else {
-      toast.error(result.message || "🚫 Failed to banish adventurer");
+      toast.error("🚫 Failed to banish adventurer");
     }
   };
 
   const onClick = async () => {
     startTransition(() => {
       if (isBlocking) {
-        welcomeBackAdventurer(userId).then(handleResult);
+        restoreAdventurer(userId).then(handleResult);
       } else {
         banishAdventurer(userId).then(handleResult);
       }

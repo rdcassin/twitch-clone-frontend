@@ -13,11 +13,9 @@ const roomService = new RoomServiceClient(
 
 export const banishAdventurer = async (id: string) => {
   const self = await getSelf();
-
-  let blockedUser;
-
+  let result = { success: false, message: "Unknown error" };
   try {
-    blockedUser = await blockUser(id);
+    result = await blockUser(id);
   } catch {
     // Target Adventurer is not logged in
   }
@@ -30,14 +28,17 @@ export const banishAdventurer = async (id: string) => {
 
   revalidatePath(`/u/${self.username}/adventurers`);
 
-  return { success: true, data: blockedUser };
+  return result;
 };
 
-export const welcomeBackAdventurer = async (id: string) => {
+export const restoreAdventurer = async (id: string) => {
   const self = await getSelf();
-  const unblockedUser = await unblockUser(id);
+  let result = { success: false, message: "Unknown error" };
+  try {
+    result = await unblockUser(id);
+  } catch {}
 
   revalidatePath(`/u/${self.username}/adventurers`);
 
-  return { success: true, data: unblockedUser };
+  return result;
 };

@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { prisma } from "@/lib/prisma";
+import { resetIngresses } from "@/actions/ingress";
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -128,6 +129,16 @@ export async function POST(req: NextRequest) {
         { status: 500 },
       );
     }
+  }
+
+  if (eventType === "user.deleted") {
+    await resetIngresses(payload.data.id);
+
+    await prisma.user.delete({
+      where: {
+        clerkId: payload.data.id,
+      },
+    });
   }
 
   return NextResponse.json({ message: "Success" });
